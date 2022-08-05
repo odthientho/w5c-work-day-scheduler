@@ -77,4 +77,13 @@ function init() {
     showScheduler();
 }
 
+setInterval(function() {
+    var hour = moment().format('HH');
+    for (var i=9; i <= 17; i++) {
+        if (i < hour) scheduler.children().eq(i-9).children().eq(1).attr("class", "past");
+        if (i == hour) scheduler.children().eq(i-9).children().eq(1).attr("class", "present");
+        if (i > hour) scheduler.children().eq(i-9).children().eq(1).attr("class", "future");
+    }
+}, 1);
+
 init();
