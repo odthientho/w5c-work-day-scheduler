@@ -1,3 +1,4 @@
+// current day will be shown in the header
 var currentDay = moment().format("dddd, MMMM Do");
 $('#currentDay').text(currentDay);
 
@@ -29,6 +30,7 @@ function insertNewRow(hour, task) {
     scheduler.append(newRow);
 }
 
+// showing scheduler with data saved in localstorage
 function showScheduler() {
     var currentScheduler = JSON.parse(localStorage.getItem("schedulingData"));
     currentScheduler.forEach(eachHour => {
@@ -36,6 +38,7 @@ function showScheduler() {
     });
 }
 
+// set-up new scheduler (blank scheduler) every day
 function refreshScheduler() {
     var newBlankScheduler = [
         {hour: "09 AM", task: ""},
@@ -52,6 +55,7 @@ function refreshScheduler() {
     localStorage.setItem("schedulingData", JSON.stringify(newBlankScheduler));
 }
 
+// to update date saved with new task for an hour
 function updateScheduler(hour, task) {
     var currentScheduler = JSON.parse(localStorage.getItem("schedulingData"));
     currentScheduler.forEach(eachHour => {
@@ -62,6 +66,7 @@ function updateScheduler(hour, task) {
     localStorage.setItem("schedulingData", JSON.stringify(currentScheduler));
 }
 
+// click event of saveBtn to update scheduler
 scheduler.on('click', '.saveBtn', function(event) {
     var hourlyTask = $(event.target).parent();
 
@@ -71,14 +76,17 @@ scheduler.on('click', '.saveBtn', function(event) {
     updateScheduler(hour, task);
 });
 
+// initially checking whether it is beginning of a day or any data saved
 function init() {
     var dataDate = localStorage.getItem("dataDate");
     if (dataDate === null || dataDate != currentDay) refreshScheduler();
     showScheduler();
 }
 
+// Always watch out to set right class (color) for a time-row
 setInterval(function() {
-    var hour = moment().format('HH');
+    //var hour = moment().format('HH');
+    var hour = 12;
     for (var i=9; i <= 17; i++) {
         if (i < hour) scheduler.children().eq(i-9).children().eq(1).attr("class", "past");
         if (i == hour) scheduler.children().eq(i-9).children().eq(1).attr("class", "present");
