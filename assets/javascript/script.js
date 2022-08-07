@@ -85,8 +85,7 @@ function init() {
 
 // Always watch out to set right class (color) for a time-row
 setInterval(function() {
-    //var hour = moment().format('HH');
-    var hour = 12;
+    var hour = moment().format('HH');
     for (var i=9; i <= 17; i++) {
         if (i < hour) scheduler.children().eq(i-9).children().eq(1).attr("class", "past");
         if (i == hour) scheduler.children().eq(i-9).children().eq(1).attr("class", "present");
